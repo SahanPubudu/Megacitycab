@@ -118,7 +118,7 @@
                 </div>
             </div>
             <p id="copyright_2">
-                Copyright - Mega city cab service 2024 | Designed by Ruvidu Dulmina
+                Copyright - Mega city cab service 2024 
             </p>
         </div>
     </div>
