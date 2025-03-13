@@ -1,6 +1,5 @@
 package com.megacab.repository;
 
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,9 +9,13 @@ import com.megacab.model.VehicleModel;
 
 public class VehicleRepo {
 
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/megacab?useSSL=false&serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
+
     private Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/megacab", "root", "root");
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
     public boolean addVehicle(VehicleModel vehicle) {
