@@ -34,68 +34,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Your Cab</title>
     
-    <link rel="stylesheet" href="CSS/main.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            color: #e0e0e0;
+            line-height: 1.6;
         }
+
+        .page_header {
+            background: linear-gradient(135deg, #222, #333);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .page_header_sub_wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .company_logo h1 {
+            font-size: 2.5rem;
+            color: #ff4444;
+        }
+
+        .user_indicator {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user_indicator img {
+            width: 25px;
+            height: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .user_indicator img:hover {
+            transform: scale(1.2);
+        }
+
+        .user_indicator a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .user_indicator a:hover {
+            color: #ff4444;
+        }
+
         .container {
-            max-width: 700px;
+            max-width: 800px;
             margin-top: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .card {
             border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            background: #333;
         }
-        .btn-primary {
-            background-color: #007bff;
+
+        .card h3 {
+            color: #ff4444;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #444;
+            padding: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #444;
+            color: #fff;
+        }
+
+        .form-control:focus {
+            border-color: #ff4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .r_item_name {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff4444;
+            margin-bottom: 20px;
+        }
+
+        .r_price_wrapper {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .r_price_wrapper p {
+            margin: 0;
+        }
+
+        .r_price_wrapper button {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            padding: 10px 20px;
             border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .btn-primary:hover {
-            background-color: #0056b3;
+
+        .r_price_wrapper button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 68, 68, 0.5);
+        }
+
+        .img-fluid {
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
 <div class="page_header">
-        <div class="page_header">
-		        <div class="page_header_sub_wrapper">
-		            <div class="company_logo">
-		                <h1>MegaCityCab</h1>
-		            </div>
-		            <div class="page_search_bar">
-		                <div class="pgs_main_wrapper">
-		                    <input type="search" placeholder="Search for anything...." name="" id="">
-		                    <div class="search_icon">
-		                        <img src="assert/search.png" alt="" width="20" height="20" srcset="">
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="user_indicator">
-		                <img src="assert/online-shopping.png" width="25" height="25" alt="" srcset="">
-		                <img src="assert/heart.png" width="25" height="25" alt="" srcset="">
-		                <img src="assert/user.png" width="25" height="25" alt="" srcset="">
-		                <p id="u_name">Ruvidu</p>
-		                <a href="logout.jsp">Logout</a>
-		            </div>
-		        </div>
-		    </div>
+    <div class="page_header_sub_wrapper">
+        <div class="company_logo">
+            <h1>MegaCityCab</h1>
+        </div>
+        <div class="user_indicator">
+            <img src="assert/online-shopping.png" width="25" height="25" alt="Shopping Cart">
+            <img src="assert/heart.png" width="25" height="25" alt="Wishlist">
+            <img src="assert/user.png" width="25" height="25" alt="User">
+            <p id="u_name">User</p>
+            <a href="logout.jsp">Logout</a>
+        </div>
     </div>
+</div>
 
 <div class="container">
-    <div class="card p-4">
-        <h3 class="text-center text-primary">Book Your Ride</h3>
+    <div class="card">
+        <h3 class="text-center">Book Your Ride</h3>
 
         <% if (!imageBase64.isEmpty()) { %>
             <div class="text-center">
-                <img src="data:image/jpeg;base64,<%= imageBase64 %>" class="img-fluid rounded" style="max-height: 200px;">
+                <img src="data:image/jpeg;base64,<%= imageBase64 %>" class="img-fluid" style="max-height: 200px;">
             </div>
         <% } %>
 
