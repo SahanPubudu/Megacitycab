@@ -31,22 +31,89 @@
     
     <style>
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 50%, #ffffff 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            line-height: 1.6;
         }
+
         .container {
             max-width: 500px;
             margin-top: 100px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .card {
             border-radius: 12px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
+
         .btn-danger {
-            background-color: #dc3545;
+            background: linear-gradient(135deg, #dc3545, #b02a37);
             border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .btn-danger:hover {
-            background-color: #b02a37;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(220, 53, 69, 0.5);
+        }
+
+        .btn-outline-secondary {
+            border: 1px solid #6c757d;
+            color: #6c757d;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(108, 117, 125, 0.5);
+        }
+
+        .text-danger {
+            color: #dc3545;
+        }
+
+        .text-dark {
+            color: #333;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .fa-exclamation-triangle {
+            margin-right: 10px;
+        }
+
+        .fa-trash-alt, .fa-times {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -54,7 +121,7 @@
 <body>
 
 <div class="container">
-    <div class="card text-center p-4">
+    <div class="card text-center">
         <h3 class="text-danger"><i class="fas fa-exclamation-triangle"></i> Confirm Deletion</h3>
         <p class="text-dark">Are you sure you want to delete this vehicle? This action cannot be undone.</p>
 

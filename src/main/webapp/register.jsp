@@ -1,125 +1,151 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>register</title>
-<link rel="stylesheet" href="CSS/register.css">
-<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8">
+    <title>Register - Meca City Cab Service</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Google Fonts for Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('assert/car.jpg'); /* Japanese-inspired background */
+            background-size: cover;
+            background-position: center;
+        }
+        .login_main_wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .register_form_wrapper {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+        .register_image_wrapper img {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #e74c3c;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #c0392b;
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .form-control:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+        }
+        .text-decoration-none {
+            color: #e74c3c;
+        }
+        .text-decoration-none:hover {
+            color: #c0392b;
+        }
+        .text-center {
+            color: #333;
+        }
+        .footer_wrapper {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #e0e0e0;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 15px;
+        }
+        .footer_wrapper a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+        .footer_wrapper a:hover {
+            color: #c0392b;
+        }
+    </style>
 </head>
 <body>
-	 <div class="login_main_wrapper">
-        <div class="header_section">
-            <div class="abc_header_section">
-                <div class="abc_header_section_left">
-                    <a href="index.jsp">Overview</a>
-		            <a href="gallery.jsp">Gallery</a>
-		            <a href="offer.jsp">Offers</a>
-		            <a href="facilities.jsp">Facilities</a>
-                </div>
-                <div class="abc_header_section_middle">
-                  
-                    <p>MEGA CITY CAB SERVICE</p>
-                </div>
-                <div class="abc_header_section_right">
-                   
-                    <a href="login.html"><button>Become a Member</button></a>
+    <div class="login_main_wrapper">
+        <!-- Body Section -->
+        <div class="page_body_main_wrapper">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-6">
+                        <div class="register_form_wrapper">
+                            <h2 class="mb-4 text-center">Create Your Account</h2>
+                            <p class="text-muted text-center mb-4">Fill your details below</p>
+                            <!-- Display error messages -->
+						        <% 
+						            String errorMessages = (String) request.getAttribute("errorMessages");
+						            if (errorMessages != null) {
+						        %>
+						            <div class="alert alert-danger">
+						                <%= errorMessages %>
+						            </div>
+						        <% 
+						            }
+						        %>
+                            <form action="register" method="post">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Customer Name</label>
+                                    <input type="text" name="Name" id="name" class="form-control" placeholder="Customer Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nic" class="form-label">NIC</label>
+                                    <input type="text" name="NIC" id="nic" class="form-control" placeholder="Your NIC" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" name="Address" id="address" class="form-control" placeholder="Address" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" name="pass" id="password" class="form-control" placeholder="Your Password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="agree" required>
+                                    <label class="form-check-label" for="agree">I agree to receive marketing, advertising, and promotional information via email.</label>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <p>If you have an account <a href="login.jsp" class="text-decoration-none">Login?</a></p>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-none d-md-block">
+                        <div class="register_image_wrapper text-center">
+                            <img src="assert/logo.jpg" alt="Register Image" class="img-fluid rounded-circle shadow-lg">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-            <div class="page_body_main_wrapper">
-                <div class="body_content">
-                    <div class="left_warpper">
-                    <form action="Register" method="post">
-                        <h2>Create an your Account</h2>
-                        <p>Fill your details Bellow</p>
-                        <div class="left_warpper_user_input">
-                        
-                         <div class="user_input_tems">
-                                <label for="">Customer Name</label>
-                                <input name="Name" type="text" placeholder="Customer Name">
-                            </div>
-                            
-                               <div class="user_input_tems">
-                                <label for="">NIC</label>
-                                <input name="NIC" type="text" placeholder="Your NIC">
-                            </div>
-                          
-                            <div class="user_input_tems">
-                                <label for="">Address</label>
-                                <input name="Address" type="text" placeholder="Address">
-                            </div>
-                          
 
-                            <div class="user_input_tems">
-                                <label for="">Password</label>
-                                <input name="pass" type="password" placeholder="Your Password">
-                            </div>
-                            <div class="user_check_box">
-                                <input name="agree" type="checkbox">
-                                <p>I agree to receive marketing, advertising and promotional information via email.</p>
-                            </div>
-                            <div class="user_input_tems redirect_loging_page">
-                                <p>If you have an account <a href="login.jsp">Login?</a></p>
-                            </div>
-                        </div>
-                        <div class="footer_btn">
-                            <button type="submit">Register</button>
-                        </div>
-                        </form>
-                    </div>
-                    <div class="right_warpper">
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer_wrapper">
-            <div class="footer_header">
-                <div class="footer_header_left"></div>
-                <div class="footer_header_middle">
-                
-                    <h2>MEGA CITY CAB SERVICE</h2>
-                </div>
-                <div class="footer_header_right"></div>
-            </div>
-            <div class="middle_section_footer">
-                <div class="middle_section_footer_left">
-                    <p>CONTACT</p>
-                </div>
-                <div class="middle_section_footer_middle">
-                    <p>Join our malling list for updates</p>
-                    <p>Get news & offer event</p>
-                </div>
-                <div class="middle_section_footer_right">
-                    <p>WORKING HOUSE</p>
-                </div>
-            </div>
-            <div class="bottom_section_footer">
-                <div class="bottom_section_footer_left">
-                    <p>5 Colombo,2002 Paris</p>
-                    <p>Call - +94719208046</p>
-                    <p>megacitycabservice@gmail.com</p>
-                </div>
-                <div class="bottom_section_footer_middle">
-                    <div class="email_address_customize">
-                        <input type="email" placeholder="Email" />
-                        <button>Subcribe</button>
-                    </div>
-                </div>
-                <div class="bottom_section_footer_right">
-                    <p>Mon-Fri 7.00am - 10.00pm</p>
-                    <p>Sat:7.00am - 6.00pm</p>
-                    <p>Sun:8.00am - 6.00pm</p>
-                </div>
-            </div>
-            <p id="copyright_2">
-                Copyright - megacitycabservice 2024 | Designed by Ruvidu Dulmina
-            </p>
-        </div>
+
     </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

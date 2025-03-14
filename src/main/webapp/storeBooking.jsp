@@ -1,87 +1,125 @@
-<%@ page import="java.sql.*, java.io.*" %>
+<%@ page import="com.itextpdf.text.*" %>
+<%@ page import="com.itextpdf.text.pdf.*" %>
 
 <%
-    request.setCharacterEncoding("UTF-8");
-
+    // Retrieve form data from the submitted form
     String fullName = request.getParameter("full_name");
     String address = request.getParameter("address");
     String nic = request.getParameter("nic");
     String phone = request.getParameter("phone");
     String email = request.getParameter("email");
-    String whatsapp = request.getParameter("whatsapp");
     String fromLocation = request.getParameter("from_location");
     String toLocation = request.getParameter("to_location");
-    String vehicleId = request.getParameter("vehicle_id");
     String vehicleModel = request.getParameter("vehicle_model");
     String rentPrice = request.getParameter("rent_price");
 
-    // Validate that required fields are not empty
-    if (fullName == null || address == null || nic == null || phone == null || email == null || 
-        whatsapp == null || fromLocation == null || toLocation == null || vehicleId == null || 
-        vehicleModel == null || rentPrice == null) {
+    try {
+        // Create PDF document
+        Document document = new Document(PageSize.A4);
         
-        out.println("<script>alert('All fields are required. Please try again.'); window.history.back();</script>");
-    } else {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/megacab", "root", "root");
-
-            String sql = "INSERT INTO checkout (full_name, address, nic, phone, email, whatsapp, from_location, to_location, vehicle_id, vehicle_model, rent_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            stmt.setString(1, fullName);
-            stmt.setString(2, address);
-            stmt.setString(3, nic);
-            stmt.setString(4, phone);
-            stmt.setString(5, email);
-            stmt.setString(6, whatsapp);
-            stmt.setString(7, fromLocation);
-            stmt.setString(8, toLocation);
-            stmt.setInt(9, Integer.parseInt(vehicleId));
-            stmt.setString(10, vehicleModel);
-            stmt.setDouble(11, Double.parseDouble(rentPrice));
-
-            int rowsInserted = stmt.executeUpdate();
-            int generatedId = -1;
-
-            if (rowsInserted > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
-                if (rs.next()) {
-                    generatedId = rs.getInt(1);
-                }
-                rs.close();
-            }
-
-            stmt.close();
-            conn.close();
-
-            if (generatedId != -1) {
+        // Set content type to PDF
+        response.setContentType("application/pdf");
+        
+        // Suggest to the browser that the content should be downloaded as an attachment
+        response.setHeader("Content-Disposition", "attachment; filename=\"ticket.pdf\"");
+        
+        // Create a PDF writer that writes to the response output stream
+        PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
+        
+        // Open the document to write content
+        document.open();
+        
+        // Add a custom header with a logo and title
+        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, BaseColor.BLACK);
+        Paragraph title = new Paragraph("MegaCityCab Booking Receipt", titleFont);
+        title.setAlignment(Element.ALIGN_CENTER);
+        document.add(title);
+        
+        // Add a custom line separator using Chunk
+        document.add(new Chunk("---------------------------------------------------"));
+        
+        // Add some space
+        document.add(Chunk.NEWLINE);
+        
+        // Add receipt heading
+        Font sectionFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);
+        Paragraph detailsHeading = new Paragraph("Booking Details", sectionFont);
+        detailsHeading.setAlignment(Element.ALIGN_LEFT);
+        document.add(detailsHeading);
+        
+        // Add booking details inside a styled table
+        PdfPTable table = new PdfPTable(2); // Two columns for field and value
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(10f);
+        table.setSpacingAfter(10f);
+        
+        // Add headers with bold style and background color
+        PdfPCell cell = new PdfPCell(new Phrase("Field", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setBackgroundColor(new BaseColor(37, 117, 252)); // Blue background
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("Details", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setBackgroundColor(new BaseColor(37, 117, 252)); // Blue background
+        table.addCell(cell);
+        
+        // Add data to the table with padding and borders
+        Font dataFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK);
+        
+        table.addCell(createCell("Full Name:", dataFont));
+        table.addCell(createCell(fullName, dataFont));
+        
+        table.addCell(createCell("Address:", dataFont));
+        table.addCell(createCell(address, dataFont));
+        
+        table.addCell(createCell("NIC:", dataFont));
+        table.addCell(createCell(nic, dataFont));
+        
+        table.addCell(createCell("Phone:", dataFont));
+        table.addCell(createCell(phone, dataFont));
+        
+        table.addCell(createCell("Email:", dataFont));
+        table.addCell(createCell(email, dataFont));
+        
+        table.addCell(createCell("From Location:", dataFont));
+        table.addCell(createCell(fromLocation, dataFont));
+        
+        table.addCell(createCell("To Location:", dataFont));
+        table.addCell(createCell(toLocation, dataFont));
+        
+        table.addCell(createCell("Vehicle Model:", dataFont));
+        table.addCell(createCell(vehicleModel, dataFont));
+        
+        table.addCell(createCell("Rent Price:", dataFont));
+        table.addCell(createCell("LKR " + rentPrice, dataFont));
+        
+        // Add the table to the document
+        document.add(table);
+        
+        // Add some space
+        document.add(Chunk.NEWLINE);
+        
+        // Add footer with "Thank you" message
+        Font footerFont = FontFactory.getFont(FontFactory.HELVETICA, 10, BaseColor.GRAY);
+        Paragraph footer = new Paragraph("Thank you for booking with MegaCityCab! Enjoy your trip!", footerFont);
+        footer.setAlignment(Element.ALIGN_CENTER);
+        document.add(footer);
+        
+        // Close the document to complete the PDF
+        document.close();
+    } catch (Exception e) {
+        // Handle any errors during PDF generation
+        e.printStackTrace();
+        out.println("<script>alert('Error generating ticket. Try again.'); window.history.back();</script>");
+    }
 %>
-                <form id="ticketForm" action="downloadTicket" method="post">
-                    <input type="hidden" name="full_name" value="<%= fullName %>">
-                    <input type="hidden" name="address" value="<%= address %>">
-                    <input type="hidden" name="nic" value="<%= nic %>">
-                    <input type="hidden" name="phone" value="<%= phone %>">
-                    <input type="hidden" name="email" value="<%= email %>">
-                    <input type="hidden" name="from_location" value="<%= fromLocation %>">
-                    <input type="hidden" name="to_location" value="<%= toLocation %>">
-                    <input type="hidden" name="vehicle_model" value="<%= vehicleModel %>">
-                    <input type="hidden" name="rent_price" value="<%= rentPrice %>">
-                </form>
 
-                <script>
-			        document.getElementById("ticketForm").submit();
-			        setTimeout(function () {
-			            window.location.href = "index.jsp";
-			        }, 500); // Wait 3 seconds before redirecting
-			    </script>
-<%
-            } else {
-                out.println("<script>alert('Failed to insert booking. Try again.'); window.history.back();</script>");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            out.println("<script>alert('Error: " + e.getMessage() + "'); window.history.back();</script>");
-        }
+<%!
+    // Helper method to create a styled cell
+    private PdfPCell createCell(String text, Font font) {
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        cell.setPadding(8);
+        cell.setBorderColor(BaseColor.LIGHT_GRAY);
+        return cell;
     }
 %>

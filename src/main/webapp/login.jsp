@@ -1,178 +1,182 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Login</title>
-<link rel="stylesheet" href="CSS/Login.css">
+    <meta charset="UTF-8">
+    <title>Login - Meca City Cab Service</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Google Fonts for Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('assert/car.jpg'); /* Add a Japanese-inspired background image */
+            background-size: cover;
+            background-position: center;
+        }
+        .login_main_wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login_form_wrapper {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .login_image_wrapper img {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #e74c3c;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #c0392b;
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .form-control:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+        }
+        .text-decoration-none {
+            color: #e74c3c;
+        }
+        .text-decoration-none:hover {
+            color: #c0392b;
+        }
+        .text-center {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-<input type="hidden" id="Response" value="<%=request.getAttribute("Response")%>">
-<div class="login_main_wrapper">
-        <div class="header_section">
-            <div class="abc_header_section">
-                <div class="abc_header_section_left">
-                    <a href="">Welcome</a>
-                    <a href="">Types</a>
-                    <a href="">Select Your Choice</a>
-                    <a href="">Offer</a>
-                </div>
-                <div class="abc_header_section_middle">
-                    <img src="assert/logo1.png" width="70" height="70" alt="LOGO" />
-                    <p>MEGA CITY CAB SERVICE</p>
-                </div>
-                <div class="abc_header_section_right">
-                    <img src="assert/search.png" width="20" alt="Search" />
-                    <a href="login.html"><button>Become a Member</button></a>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="page_body_main_wrapper">
-                <div class="body_content">
-                    <div class="left_warpper">
-                      <form action="Login" method="get">
-                        <h2>Login your Account</h2>
-                        <p>Fill your details Bellow</p>
-                        <div class="left_warpper_user_input">
-                            
-                            <div class="user_input_tems">
-                                <label for="">User Name</label>
-                                <input name="name" type="text" placeholder="User Name">
-                            </div>
-
-                            <div class="user_input_tems">
-                                <label for="">Password</label>
-                                <input name="pass" type="password" placeholder="Your Password">
-                            </div>
-
-                            <div class="user_input_tems redirect_loging_page">
-                                <p> <a href="forgot.jsp">Froget Password?</a></p>
-                            </div>
-
-                            <div class="sign_in_method">
-                                <div class="sign_in_method_icons">
-                                    <img src="assert/social-media1.png" alt="" width="100%" height="100%" >
+    <input type="hidden" id="Response" value="<%=request.getAttribute("Response")%>">
+    <div class="login_main_wrapper">
+        <!-- Body Section -->
+        <div class="page_body_main_wrapper">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-6">
+                        <div class="login_form_wrapper p-5 rounded shadow-lg">
+                            <h2 class="mb-4 text-center">Login to Your Account</h2>
+                            <p class="text-muted text-center mb-4">Fill your details below</p>
+                            <form id="loginForm" action="Login" method="get">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">User Name</label>
+                                    <input type="text" name="name" id="username" class="form-control" placeholder="User Name" required>
                                 </div>
-                                <div class="sign_in_method_icons">
-                                    <img src="assert/social2.png" alt="" width="100%" height="100%" >
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" name="pass" id="password" class="form-control" placeholder="Your Password" required>
                                 </div>
-                                <div class="sign_in_method_icons">
-                                    <img src="assert/social3.png" alt="" width="100%" height="100%">
+                                <div class="mb-3 text-end">
+                                    <a href="forgot.jsp" class="text-decoration-none">Forgot Password?</a>
                                 </div>
-                            </div>
-                            <div class="user_input_tems redirect_loging_page">
-                                <p>If you hav'nt account <a href="register.jsp">register?</a></p>
-                            </div>
+                                <div class="mb-3 text-center">
+                                    <p class="mb-0">Don't have an account? <a href="register.jsp" class="text-decoration-none">Register</a></p>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" id="loginBtn" class="btn btn-primary btn-lg">Login</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="footer_btn">
-                            <button type="submit" id="loginBtn">Login</button>
-                        </div>
-                        </form>
                     </div>
-                    <div class="right_warpper">
-                        <img src="assert/blog-1.jpg" height="400" width="100%" alt="" srcset="">
+                    <div class="col-md-6 d-none d-md-block">
+                        <div class="login_image_wrapper text-center">
+                            <img src="assert/logo.jpg" alt="Login Image" class="img-fluid rounded-circle shadow-lg">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+    $(document).ready(function () {
+        const response = $("#Response").val();
         
-        <div class="footer_wrapper">
-            <div class="footer_header">
-                <div class="footer_header_left"></div>
-                <div class="footer_header_middle">
-                    <img src="Assert/Group.svg" width="60" alt="" srcset="" />
-                    <h2>MEGA CITY CAB SERVICE</h2>
-                </div>
-                <div class="footer_header_right"></div>
-            </div>
-            <div class="middle_section_footer">
-                <div class="middle_section_footer_left">
-                    <p>CONTACT</p>
-                </div>
-                <div class="middle_section_footer_middle">
-                    <p>Join our malling list for updates</p>
-                    <p>Get news & offer event</p>
-                </div>
-                <div class="middle_section_footer_right">
-                    <p>WORKING HOUSE</p>
-                </div>
-            </div>
-            <div class="bottom_section_footer">
-                <div class="bottom_section_footer_left">
-                    <p>5 Colombo,2002 Paris</p>
-                    <p>Call - +94719208046</p>
-                    <p>megacitycabservice@gmail.com</p>
-                </div>
-                <div class="bottom_section_footer_middle">
-                    <div class="email_address_customize">
-                        <input type="email" placeholder="Email" />
-                        <button>Subcribe</button>
-                    </div>
-                </div>
-                <div class="bottom_section_footer_right">
-                    <p>Mon-Fri 7.00am - 10.00pm</p>
-                    <p>Sat:7.00am - 6.00pm</p>
-                    <p>Sun:8.00am - 6.00pm</p>
-                </div>
-            </div>
-            <p id="copyright_2">
-                Copyright - Mega city cab service 2024 
-            </p>
-        </div>
-    </div>
-     <!-- Popup Container -->
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <h3>Popup Message</h3>
-            <p>This is a simple popup message. You can put any content here.</p>
-        </div>
-    </div>
-    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script defer type="text/javascript">
-    var popup = document.getElementById("popup");
-    	var message = document.getElementById("Response").value;
-    	const loginBtn = document.getElementById("loginBtn");
-    	loginBtn.addEventListener("click",()=>{
-    		console.log(message);
-        	if(message == "success"){
-        		popup.style.display = "block";
-        	}else{
-        		Swal.fire({
-        			  title: "Good job!",
-        			  text: "Successfully login your account",
-        			  icon: "success"
-        			});
-        	}
-    	});
-    	// Get the popup element
-    	var popup = document.getElementById("popup");
+        // Success or failure response handling
+        if (response === "success") {
+            Swal.fire({
+                title: "Success!",
+                text: "You have successfully logged in.",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+            }).then(() => {
+                window.location.href = "index.jsp"; // Redirect after success
+            });
+        } else if (response === "failed") {
+            Swal.fire({
+                title: "Error!",
+                text: "Invalid username or password.",
+                icon: "error",
+                confirmButtonColor: "#d33",
+            });
+        }
 
-    	// Get the button that opens the popup
-    	var popupBtn = document.getElementById("popupBtn");
+        // Validate the form before submitting
+        $("#loginForm").submit(function (event) {
+            const username = $("#username").val().trim();
+            const password = $("#password").val().trim();
 
-    	// Get the <span> element that closes the popup
-    	var closeBtn = document.getElementsByClassName("close")[0];
+            // Validate username and password
+            if (username === "") {
+                Swal.fire({
+                    title: "Validation Error!",
+                    text: "Username cannot be empty.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
 
-    	// When the user clicks the button, open the popup
-    	popupBtn.onclick = function() {
-    	    popup.style.display = "block";
-    	}
+            if (password === "") {
+                Swal.fire({
+                    title: "Validation Error!",
+                    text: "Password cannot be empty.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
 
-    	// When the user clicks on <span> (x), close the popup
-    	closeBtn.onclick = function() {
-    	    popup.style.display = "none";
-    	}
+            if (password.length < 6) {
+                Swal.fire({
+                    title: "Validation Error!",
+                    text: "Password must be at least 6 characters long.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
 
-    	// When the user clicks anywhere outside of the popup, close it
-    	window.onclick = function(event) {
-    	    if (event.target == popup) {
-    	        popup.style.display = "none";
-    	    }
-    	}
-
-    </script>
+            // Allow form submission if all validations pass
+            return true;
+        });
+    });
+</script>
 </body>
 </html>
